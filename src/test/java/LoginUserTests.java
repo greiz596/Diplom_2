@@ -1,3 +1,4 @@
+import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import data.Login;
 import org.junit.After;
@@ -11,6 +12,7 @@ public class LoginUserTests extends BaseTest {
 
     @Test
     @DisplayName("Логин. Пользователь существует")
+    @Description("Успешный логин существующего пользователя")
     public void loginValidUser() {
 
         USER_API.sendCreateUser(DEFAULT_CREATE_USER_DATA).then().statusCode(CODE_200);
@@ -25,6 +27,7 @@ public class LoginUserTests extends BaseTest {
 
     @Test
     @DisplayName("Логин. Неправильный email")
+    @Description("Неуспешный логин с неправильным email, но правильным паролем")
     public void loginInvalidEmail() {
         USER_API.sendCreateUser(DEFAULT_CREATE_USER_DATA).then().statusCode(CODE_200);
         Login login = new Login(WRONG_EMAIL, PASSWORD);
@@ -37,6 +40,7 @@ public class LoginUserTests extends BaseTest {
 
     @Test
     @DisplayName("Логин. Неправильный пароль")
+    @Description("Неуспешный логин с правильным email, но неправильным паролем")
     public void loginInvalidPassword() {
         USER_API.sendCreateUser(DEFAULT_CREATE_USER_DATA).then().statusCode(CODE_200);
         Login login = new Login(EMAIL, WRONG_PASSWORD);

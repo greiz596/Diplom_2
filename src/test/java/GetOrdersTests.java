@@ -1,3 +1,4 @@
+import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.After;
 import org.junit.Test;
@@ -13,6 +14,8 @@ public class GetOrdersTests extends BaseTest {
 
     @Test
     @DisplayName("Получить список заказов. Пользователь авторизован")
+    @Description("Получен список заказов конкретного пользователя под его учетной записью")
+
     public void getOrdersAuthUser() {
         USER_API.sendCreateUser(DEFAULT_CREATE_USER_DATA).then().statusCode(CODE_200);
         String accessToken=USER_API.loginGetAccessToken(DEFAULT_LOGIN_DATA);
@@ -35,6 +38,7 @@ public class GetOrdersTests extends BaseTest {
 
     @Test
     @DisplayName("Получить список заказов. Пользователь не авторизован")
+    @Description("Не получен список заказов, отсутствует авторизация")
     public void getOrdersUnAuthUser() {
         ORDER_API.sendGetOrder("").then()
                 .statusCode(CODE_401)

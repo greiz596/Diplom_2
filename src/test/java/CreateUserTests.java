@@ -1,3 +1,4 @@
+import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import data.CreateUser;
 import org.junit.After;
@@ -12,6 +13,7 @@ public class CreateUserTests extends BaseTest{
 
     @Test
     @DisplayName("Создать новый уникальный пользователь")
+    @Description("Успешное создание нового уникального пользователя")
     public void createNewUser(){
    USER_API.sendCreateUser(DEFAULT_CREATE_USER_DATA)
                 .then()
@@ -24,7 +26,8 @@ public class CreateUserTests extends BaseTest{
     }
 
     @Test
-    @DisplayName("Создать новый не уникальный пользователь")
+    @DisplayName("Создать новый неуникальный пользователь")
+    @Description("Неуспешное создание пользователя, который уже существует")
     public void createDuplicationUser() {
         USER_API.sendCreateUser(DEFAULT_CREATE_USER_DATA).then().statusCode(CODE_200);
         USER_API.sendCreateUser(DEFAULT_CREATE_USER_DATA).then()
@@ -35,6 +38,7 @@ public class CreateUserTests extends BaseTest{
 
     @Test
     @DisplayName("Создать пользователя без email")
+    @Description("Неуспешное создание пользователя без email")
     public void createUserWithoutEmail() {
         CreateUser createUser = new CreateUser(null, PASSWORD, LOGIN);
         USER_API.sendCreateUser(createUser).then()
@@ -45,6 +49,7 @@ public class CreateUserTests extends BaseTest{
 
     @Test
     @DisplayName("Создать пользователя без поля password")
+    @Description("Неуспешное  создание пользователя без password")
     public void createUserWithoutPassword() {
         CreateUser createUser = new CreateUser(EMAIL, null, LOGIN);
         USER_API.sendCreateUser(createUser).then()
@@ -55,6 +60,7 @@ public class CreateUserTests extends BaseTest{
 
     @Test
     @DisplayName("Создать пользователя без login")
+    @Description("Неуспешное  создание пользователя без login")
     public void createUserWithoutLogin() {
         CreateUser createUser = new CreateUser(EMAIL, PASSWORD, null);
         USER_API.sendCreateUser(createUser).then()

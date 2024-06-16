@@ -1,3 +1,4 @@
+import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import data.CreateOrder;
 import org.junit.After;
@@ -14,6 +15,7 @@ public class CreateOrderTests extends BaseTest {
 
     @Test
     @DisplayName("Создать новый заказ с ингредиентами. Пользователь авторизован")
+    @Description("Успешное создание заказа под учетной записью пользователя")
     public void createOrderWithAuth() {
         USER_API.sendCreateUser(DEFAULT_CREATE_USER_DATA).then().statusCode(CODE_200);
         String accessToken = USER_API.loginGetAccessToken(DEFAULT_LOGIN_DATA);
@@ -27,6 +29,7 @@ public class CreateOrderTests extends BaseTest {
 
     @Test
     @DisplayName("Создать новый заказ с ингредиентами. Пользователь не авторизован")
+    @Description("Успешное создание заказа без учетной записи пользователя")
     public void createOrderWithoutAuth() {
         ORDER_API.sendCreateOrder(DEFAULT_CREATE_ORDER_DATA, "").then()
                 .statusCode(CODE_200)
@@ -37,6 +40,8 @@ public class CreateOrderTests extends BaseTest {
 
     @Test
     @DisplayName("Создать новый заказ без ингредиентов")
+    @Description("Неуспешное создание заказа без ингредиентов")
+
     public void createOrderWithoutIngredients() {
         USER_API.sendCreateUser(DEFAULT_CREATE_USER_DATA).then().statusCode(CODE_200);
         String accessToken = USER_API.loginGetAccessToken(DEFAULT_LOGIN_DATA);
@@ -52,6 +57,7 @@ public class CreateOrderTests extends BaseTest {
 
     @Test
     @DisplayName("Создать новый заказ. Некорректный хэш")
+    @Description("Неуспешное создание заказа с неправильным хэш ингредиентов")
     public void createOrderIncorrectHash() {
         USER_API.sendCreateUser(DEFAULT_CREATE_USER_DATA).then().statusCode(CODE_200);
         String accessToken = USER_API.loginGetAccessToken(DEFAULT_LOGIN_DATA);
